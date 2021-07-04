@@ -25,27 +25,31 @@
 		private void InitializeComponent() {
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.bpTest = new System.Windows.Forms.Button();
-			this.rb256 = new System.Windows.Forms.RadioButton();
-			this.rb512 = new System.Windows.Forms.RadioButton();
 			this.grpCos1 = new System.Windows.Forms.GroupBox();
+			this.label10 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.txbOffset1 = new System.Windows.Forms.TextBox();
 			this.txbDephasage1 = new System.Windows.Forms.TextBox();
 			this.txbAmplitude1 = new System.Windows.Forms.TextBox();
 			this.txbPeriode1 = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.chkEnable1 = new System.Windows.Forms.CheckBox();
 			this.grpCos2 = new System.Windows.Forms.GroupBox();
+			this.label11 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
+			this.txbOffset2 = new System.Windows.Forms.TextBox();
 			this.txbDephasage2 = new System.Windows.Forms.TextBox();
 			this.txbAmplitude2 = new System.Windows.Forms.TextBox();
 			this.txbPeriode2 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.chkEnable2 = new System.Windows.Forms.CheckBox();
 			this.grpCos3 = new System.Windows.Forms.GroupBox();
+			this.label12 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
+			this.txbOffset3 = new System.Windows.Forms.TextBox();
 			this.txbDephasage3 = new System.Windows.Forms.TextBox();
 			this.txbAmplitude3 = new System.Windows.Forms.TextBox();
 			this.txbPeriode3 = new System.Windows.Forms.TextBox();
@@ -54,6 +58,8 @@
 			this.bpExport = new System.Windows.Forms.Button();
 			this.bpRead = new System.Windows.Forms.Button();
 			this.bpSave = new System.Windows.Forms.Button();
+			this.label13 = new System.Windows.Forms.Label();
+			this.txbNbPt = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.grpCos1.SuspendLayout();
 			this.grpCos2.SuspendLayout();
@@ -78,44 +84,31 @@
 			this.bpTest.UseVisualStyleBackColor = true;
 			this.bpTest.Click += new System.EventHandler(this.bpTest_Click);
 			// 
-			// rb256
-			// 
-			this.rb256.AutoSize = true;
-			this.rb256.Checked = true;
-			this.rb256.Location = new System.Drawing.Point(530, 125);
-			this.rb256.Name = "rb256";
-			this.rb256.Size = new System.Drawing.Size(134, 17);
-			this.rb256.TabIndex = 2;
-			this.rb256.TabStop = true;
-			this.rb256.Text = "Courbe sur 256 valeurs";
-			this.rb256.UseVisualStyleBackColor = true;
-			this.rb256.CheckedChanged += new System.EventHandler(this.rb256_CheckedChanged);
-			// 
-			// rb512
-			// 
-			this.rb512.AutoSize = true;
-			this.rb512.Location = new System.Drawing.Point(530, 148);
-			this.rb512.Name = "rb512";
-			this.rb512.Size = new System.Drawing.Size(134, 17);
-			this.rb512.TabIndex = 3;
-			this.rb512.Text = "Courbe sur 512 valeurs";
-			this.rb512.UseVisualStyleBackColor = true;
-			this.rb512.CheckedChanged += new System.EventHandler(this.rb512_CheckedChanged);
-			// 
 			// grpCos1
 			// 
+			this.grpCos1.Controls.Add(this.label10);
 			this.grpCos1.Controls.Add(this.label7);
 			this.grpCos1.Controls.Add(this.label2);
+			this.grpCos1.Controls.Add(this.txbOffset1);
 			this.grpCos1.Controls.Add(this.txbDephasage1);
 			this.grpCos1.Controls.Add(this.txbAmplitude1);
 			this.grpCos1.Controls.Add(this.txbPeriode1);
 			this.grpCos1.Controls.Add(this.label1);
-			this.grpCos1.Location = new System.Drawing.Point(530, 183);
+			this.grpCos1.Location = new System.Drawing.Point(530, 144);
 			this.grpCos1.Name = "grpCos1";
-			this.grpCos1.Size = new System.Drawing.Size(160, 105);
+			this.grpCos1.Size = new System.Drawing.Size(160, 130);
 			this.grpCos1.TabIndex = 4;
 			this.grpCos1.TabStop = false;
 			this.grpCos1.Text = "Cosinus 1";
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(6, 110);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(35, 13);
+			this.label10.TabIndex = 4;
+			this.label10.Text = "Offset";
 			// 
 			// label7
 			// 
@@ -135,9 +128,17 @@
 			this.label2.TabIndex = 3;
 			this.label2.Text = "Amplitude (y)";
 			// 
+			// txbOffset1
+			// 
+			this.txbOffset1.Location = new System.Drawing.Point(78, 107);
+			this.txbOffset1.Name = "txbOffset1";
+			this.txbOffset1.Size = new System.Drawing.Size(74, 20);
+			this.txbOffset1.TabIndex = 2;
+			this.txbOffset1.Text = "100.0";
+			// 
 			// txbDephasage1
 			// 
-			this.txbDephasage1.Location = new System.Drawing.Point(78, 81);
+			this.txbDephasage1.Location = new System.Drawing.Point(78, 77);
 			this.txbDephasage1.Name = "txbDephasage1";
 			this.txbDephasage1.Size = new System.Drawing.Size(74, 20);
 			this.txbDephasage1.TabIndex = 2;
@@ -145,11 +146,11 @@
 			// 
 			// txbAmplitude1
 			// 
-			this.txbAmplitude1.Location = new System.Drawing.Point(78, 50);
+			this.txbAmplitude1.Location = new System.Drawing.Point(78, 47);
 			this.txbAmplitude1.Name = "txbAmplitude1";
 			this.txbAmplitude1.Size = new System.Drawing.Size(74, 20);
 			this.txbAmplitude1.TabIndex = 2;
-			this.txbAmplitude1.Text = "200.0";
+			this.txbAmplitude1.Text = "100.0";
 			// 
 			// txbPeriode1
 			// 
@@ -171,7 +172,7 @@
 			// chkEnable1
 			// 
 			this.chkEnable1.AutoSize = true;
-			this.chkEnable1.Location = new System.Drawing.Point(695, 216);
+			this.chkEnable1.Location = new System.Drawing.Point(695, 177);
 			this.chkEnable1.Name = "chkEnable1";
 			this.chkEnable1.Size = new System.Drawing.Size(56, 17);
 			this.chkEnable1.TabIndex = 0;
@@ -181,18 +182,29 @@
 			// 
 			// grpCos2
 			// 
+			this.grpCos2.Controls.Add(this.label11);
 			this.grpCos2.Controls.Add(this.label8);
 			this.grpCos2.Controls.Add(this.label3);
+			this.grpCos2.Controls.Add(this.txbOffset2);
 			this.grpCos2.Controls.Add(this.txbDephasage2);
 			this.grpCos2.Controls.Add(this.txbAmplitude2);
 			this.grpCos2.Controls.Add(this.txbPeriode2);
 			this.grpCos2.Controls.Add(this.label4);
-			this.grpCos2.Location = new System.Drawing.Point(530, 301);
+			this.grpCos2.Location = new System.Drawing.Point(530, 282);
 			this.grpCos2.Name = "grpCos2";
-			this.grpCos2.Size = new System.Drawing.Size(160, 105);
+			this.grpCos2.Size = new System.Drawing.Size(160, 130);
 			this.grpCos2.TabIndex = 4;
 			this.grpCos2.TabStop = false;
 			this.grpCos2.Text = "Cosinus 1";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(6, 114);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(35, 13);
+			this.label11.TabIndex = 4;
+			this.label11.Text = "Offset";
 			// 
 			// label8
 			// 
@@ -212,9 +224,17 @@
 			this.label3.TabIndex = 3;
 			this.label3.Text = "Amplitude (y)";
 			// 
+			// txbOffset2
+			// 
+			this.txbOffset2.Location = new System.Drawing.Point(78, 107);
+			this.txbOffset2.Name = "txbOffset2";
+			this.txbOffset2.Size = new System.Drawing.Size(74, 20);
+			this.txbOffset2.TabIndex = 2;
+			this.txbOffset2.Text = "0.0";
+			// 
 			// txbDephasage2
 			// 
-			this.txbDephasage2.Location = new System.Drawing.Point(80, 81);
+			this.txbDephasage2.Location = new System.Drawing.Point(78, 77);
 			this.txbDephasage2.Name = "txbDephasage2";
 			this.txbDephasage2.Size = new System.Drawing.Size(74, 20);
 			this.txbDephasage2.TabIndex = 2;
@@ -222,7 +242,7 @@
 			// 
 			// txbAmplitude2
 			// 
-			this.txbAmplitude2.Location = new System.Drawing.Point(78, 50);
+			this.txbAmplitude2.Location = new System.Drawing.Point(78, 47);
 			this.txbAmplitude2.Name = "txbAmplitude2";
 			this.txbAmplitude2.Size = new System.Drawing.Size(74, 20);
 			this.txbAmplitude2.TabIndex = 2;
@@ -248,7 +268,7 @@
 			// chkEnable2
 			// 
 			this.chkEnable2.AutoSize = true;
-			this.chkEnable2.Location = new System.Drawing.Point(695, 334);
+			this.chkEnable2.Location = new System.Drawing.Point(695, 315);
 			this.chkEnable2.Name = "chkEnable2";
 			this.chkEnable2.Size = new System.Drawing.Size(56, 17);
 			this.chkEnable2.TabIndex = 0;
@@ -258,18 +278,29 @@
 			// 
 			// grpCos3
 			// 
+			this.grpCos3.Controls.Add(this.label12);
 			this.grpCos3.Controls.Add(this.label9);
 			this.grpCos3.Controls.Add(this.label5);
+			this.grpCos3.Controls.Add(this.txbOffset3);
 			this.grpCos3.Controls.Add(this.txbDephasage3);
 			this.grpCos3.Controls.Add(this.txbAmplitude3);
 			this.grpCos3.Controls.Add(this.txbPeriode3);
 			this.grpCos3.Controls.Add(this.label6);
-			this.grpCos3.Location = new System.Drawing.Point(530, 419);
+			this.grpCos3.Location = new System.Drawing.Point(530, 420);
 			this.grpCos3.Name = "grpCos3";
-			this.grpCos3.Size = new System.Drawing.Size(160, 105);
+			this.grpCos3.Size = new System.Drawing.Size(160, 130);
 			this.grpCos3.TabIndex = 4;
 			this.grpCos3.TabStop = false;
 			this.grpCos3.Text = "Cosinus 1";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(6, 114);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(35, 13);
+			this.label12.TabIndex = 4;
+			this.label12.Text = "Offset";
 			// 
 			// label9
 			// 
@@ -289,9 +320,17 @@
 			this.label5.TabIndex = 3;
 			this.label5.Text = "Amplitude (y)";
 			// 
+			// txbOffset3
+			// 
+			this.txbOffset3.Location = new System.Drawing.Point(78, 107);
+			this.txbOffset3.Name = "txbOffset3";
+			this.txbOffset3.Size = new System.Drawing.Size(74, 20);
+			this.txbOffset3.TabIndex = 2;
+			this.txbOffset3.Text = "0.0";
+			// 
 			// txbDephasage3
 			// 
-			this.txbDephasage3.Location = new System.Drawing.Point(78, 81);
+			this.txbDephasage3.Location = new System.Drawing.Point(78, 77);
 			this.txbDephasage3.Name = "txbDephasage3";
 			this.txbDephasage3.Size = new System.Drawing.Size(74, 20);
 			this.txbDephasage3.TabIndex = 2;
@@ -299,7 +338,7 @@
 			// 
 			// txbAmplitude3
 			// 
-			this.txbAmplitude3.Location = new System.Drawing.Point(78, 50);
+			this.txbAmplitude3.Location = new System.Drawing.Point(78, 47);
 			this.txbAmplitude3.Name = "txbAmplitude3";
 			this.txbAmplitude3.Size = new System.Drawing.Size(74, 20);
 			this.txbAmplitude3.TabIndex = 2;
@@ -325,7 +364,7 @@
 			// chkEnable3
 			// 
 			this.chkEnable3.AutoSize = true;
-			this.chkEnable3.Location = new System.Drawing.Point(695, 456);
+			this.chkEnable3.Location = new System.Drawing.Point(695, 457);
 			this.chkEnable3.Name = "chkEnable3";
 			this.chkEnable3.Size = new System.Drawing.Size(56, 17);
 			this.chkEnable3.TabIndex = 0;
@@ -363,26 +402,43 @@
 			this.bpSave.UseVisualStyleBackColor = true;
 			this.bpSave.Click += new System.EventHandler(this.bpSave_Click);
 			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(539, 116);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(110, 13);
+			this.label13.TabIndex = 6;
+			this.label13.Text = "Nombre de valeurs (x)";
+			// 
+			// txbNbPt
+			// 
+			this.txbNbPt.Location = new System.Drawing.Point(655, 113);
+			this.txbNbPt.Name = "txbNbPt";
+			this.txbNbPt.Size = new System.Drawing.Size(67, 20);
+			this.txbNbPt.TabIndex = 7;
+			this.txbNbPt.Text = "256";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(754, 541);
+			this.ClientSize = new System.Drawing.Size(754, 556);
+			this.Controls.Add(this.txbNbPt);
+			this.Controls.Add(this.label13);
 			this.Controls.Add(this.bpSave);
 			this.Controls.Add(this.bpRead);
 			this.Controls.Add(this.grpCos3);
 			this.Controls.Add(this.grpCos2);
 			this.Controls.Add(this.grpCos1);
-			this.Controls.Add(this.rb512);
 			this.Controls.Add(this.chkEnable3);
 			this.Controls.Add(this.chkEnable2);
 			this.Controls.Add(this.chkEnable1);
-			this.Controls.Add(this.rb256);
 			this.Controls.Add(this.bpExport);
 			this.Controls.Add(this.bpTest);
 			this.Controls.Add(this.pictureBox1);
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "CreeCosTab";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.grpCos1.ResumeLayout(false);
 			this.grpCos1.PerformLayout();
@@ -399,8 +455,6 @@
 
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Button bpTest;
-		private System.Windows.Forms.RadioButton rb256;
-		private System.Windows.Forms.RadioButton rb512;
 		private System.Windows.Forms.GroupBox grpCos1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.TextBox txbAmplitude1;
@@ -428,6 +482,14 @@
 		private System.Windows.Forms.Button bpExport;
 		private System.Windows.Forms.Button bpRead;
 		private System.Windows.Forms.Button bpSave;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.TextBox txbOffset1;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.TextBox txbOffset2;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.TextBox txbOffset3;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.TextBox txbNbPt;
 	}
 }
 

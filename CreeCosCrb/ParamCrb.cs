@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CreeSinCrb {
+﻿namespace CreeSinCrb {
 	[System.Serializable]
 	public class ParamCrb {
 		public int nbPt = 256;
 		public bool cos1Actif;
-		public double periode1, periode2, periode3;
+		public double periode1, amplitude1, dephasage1, offset1;
 		public bool cos2Actif;
-		public double amplitude1, amplitude2, amplitude3;
+		public double periode2, amplitude2, dephasage2, offset2;
 		public bool cos3Actif;
-		public double dephasage1, dephasage2, dephasage3;
+		public double periode3, amplitude3, dephasage3, offset3;
 	}
 }

@@ -9,6 +9,7 @@ namespace CreeSinCrb {
 		private Graphics g;
 		private ParamCrb param = new ParamCrb();
 		private enum ModeData { Draw, Export };
+
 		public Form1() {
 			InitializeComponent();
 			pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -64,21 +65,21 @@ namespace CreeSinCrb {
 				sw = File.CreateText(fileName);
 
 			Pen p = new Pen(Color.FromArgb(255, 255, 255));
-			int inc = 512 / param.nbPt;
-			for (int i = 0; i < 512; i += inc) {
+			float inc = 512 / (float)param.nbPt;
+			for (float i = 0; i < 512; i += inc) {
 				double ang = i * Math.PI / 512;
-				double y1 = 0;
+				float y1 = 0;
 				if (grpCos1.Enabled)
-					y1 += param.amplitude1 + param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0));
+					y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
 
 				if (grpCos2.Enabled)
-					y1 += param.amplitude2 + param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0));
+					y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
 
 				if (grpCos3.Enabled)
-					y1 += param.amplitude3 + param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0));
+					y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
 
 				if (md == ModeData.Draw)
-					g.DrawLine(p, i, (int)(y1), i + inc, (int)(y1));
+					g.DrawLine(p, i, y1, i + inc, y1);
 				else {
 					line += "#" + ((byte)(y1 / 2)).ToString("X2") + ",";
 					if (++nbOctets >= nbOctetsLigne) {
@@ -94,15 +95,18 @@ namespace CreeSinCrb {
 				sw.Close();
 		}
 
-		private bool CheckValues(string strPer, string strAmpl, string strDephas, ref double per, ref double ampl, ref double dephas) {
-			double locPer = 0, locAmpl = 0, locDephas = 0;
+		private bool CheckValues(string strPer, string strAmpl, string strDephas, string strOffset, ref double per, ref double ampl, ref double dephas, ref double offset) {
+			double locPer = 0, locAmpl = 0, locDephas = 0, locOffset;
 			if (double.TryParse(strPer.Replace('.', ','), out locPer) && locPer > 0 && locPer < 30) {
 				per = locPer;
 				if (double.TryParse(strAmpl.Replace('.', ','), out locAmpl) && locAmpl > 0 && locAmpl < 256) {
 					ampl = locAmpl;
 					if (double.TryParse(strDephas.Replace('.', ','), out locDephas)) {
 						dephas = locDephas;
-						return true;
+						if (double.TryParse(strOffset.Replace('.', ','), out locOffset)) {
+							offset = locOffset;
+							return true;
+						}
 					}
 					else
 						MessageBox.Show("Déphasage non valide détecté.");
@@ -118,15 +122,21 @@ namespace CreeSinCrb {
 
 		private bool TestValues() {
 			// Vérifier les valeurs
-			bool testOk = true;
-			if (grpCos1.Enabled)
-				testOk &= CheckValues(txbPeriode1.Text, txbAmplitude1.Text, txbDephasage1.Text, ref param.periode1, ref param.amplitude1, ref param.dephasage1);
+			int locNbPt = 0;
+			bool testOk = int.TryParse(txbNbPt.Text, out locNbPt) && locNbPt >= 16 && locNbPt <= 16384;
+			if (testOk) {
+				param.nbPt = locNbPt;
+				if (grpCos1.Enabled)
+					testOk &= CheckValues(txbPeriode1.Text, txbAmplitude1.Text, txbDephasage1.Text, txbOffset1.Text, ref param.periode1, ref param.amplitude1, ref param.dephasage1, ref param.offset1);
 
-			if (grpCos2.Enabled)
-				testOk &= CheckValues(txbPeriode2.Text, txbAmplitude2.Text, txbDephasage2.Text, ref param.periode2, ref param.amplitude2, ref param.dephasage2);
+				if (grpCos2.Enabled)
+					testOk &= CheckValues(txbPeriode2.Text, txbAmplitude2.Text, txbDephasage2.Text, txbOffset2.Text, ref param.periode2, ref param.amplitude2, ref param.dephasage2, ref param.offset2);
 
-			if (grpCos3.Enabled)
-				testOk &= CheckValues(txbPeriode3.Text, txbAmplitude3.Text, txbDephasage3.Text, ref param.periode3, ref param.amplitude3, ref param.dephasage3);
+				if (grpCos3.Enabled)
+					testOk &= CheckValues(txbPeriode3.Text, txbAmplitude3.Text, txbDephasage3.Text, txbOffset3.Text, ref param.periode3, ref param.amplitude3, ref param.dephasage3, ref param.offset3);
+			}
+			else
+				MessageBox.Show("Nombre de points pour la courbe invalide.");
 
 			return testOk;
 		}
@@ -143,14 +153,6 @@ namespace CreeSinCrb {
 			param.cos3Actif = grpCos3.Enabled = chkEnable3.Checked;
 		}
 
-		private void rb256_CheckedChanged(object sender, EventArgs e) {
-			param.nbPt = 256;
-		}
-
-		private void rb512_CheckedChanged(object sender, EventArgs e) {
-			param.nbPt = 512;
-		}
-
 		private void bpRead_Click(object sender, EventArgs e) {
 			Enabled = false;
 			OpenFileDialog dlg = new OpenFileDialog();
@@ -164,18 +166,18 @@ namespace CreeSinCrb {
 					txbAmplitude1.Text = param.amplitude1.ToString();
 					txbDephasage1.Text = param.dephasage1.ToString();
 					txbPeriode1.Text = param.periode1.ToString();
+					txbOffset1.Text = param.offset1.ToString();
 					chkEnable2.Checked = param.cos2Actif;
 					txbAmplitude2.Text = param.amplitude2.ToString();
 					txbDephasage2.Text = param.dephasage2.ToString();
 					txbPeriode2.Text = param.periode2.ToString();
+					txbOffset2.Text = param.offset2.ToString();
 					chkEnable3.Checked = param.cos3Actif;
 					txbAmplitude3.Text = param.amplitude3.ToString();
 					txbDephasage3.Text = param.dephasage3.ToString();
 					txbPeriode3.Text = param.periode3.ToString();
-					if (param.nbPt == 256)
-						rb256.Checked = true;
-					else
-						rb512.Checked = true;
+					txbOffset3.Text = param.offset3.ToString();
+					txbNbPt.Text = param.nbPt.ToString();
 				}
 				catch {
 					MessageBox.Show("Erreur de lecture...");
