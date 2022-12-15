@@ -60,6 +60,7 @@
 			this.bpSave = new System.Windows.Forms.Button();
 			this.label13 = new System.Windows.Forms.Label();
 			this.txbNbPt = new System.Windows.Forms.TextBox();
+			this.chkModeXY = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.grpCos1.SuspendLayout();
 			this.grpCos2.SuspendLayout();
@@ -76,7 +77,7 @@
 			// 
 			// bpTest
 			// 
-			this.bpTest.Location = new System.Drawing.Point(530, 57);
+			this.bpTest.Location = new System.Drawing.Point(530, 40);
 			this.bpTest.Name = "bpTest";
 			this.bpTest.Size = new System.Drawing.Size(75, 23);
 			this.bpTest.TabIndex = 1;
@@ -374,7 +375,7 @@
 			// 
 			// bpExport
 			// 
-			this.bpExport.Location = new System.Drawing.Point(616, 57);
+			this.bpExport.Location = new System.Drawing.Point(616, 40);
 			this.bpExport.Name = "bpExport";
 			this.bpExport.Size = new System.Drawing.Size(75, 23);
 			this.bpExport.TabIndex = 1;
@@ -419,11 +420,22 @@
 			this.txbNbPt.TabIndex = 7;
 			this.txbNbPt.Text = "256";
 			// 
+			// chkModeXY
+			// 
+			this.chkModeXY.AutoSize = true;
+			this.chkModeXY.Location = new System.Drawing.Point(530, 69);
+			this.chkModeXY.Name = "chkModeXY";
+			this.chkModeXY.Size = new System.Drawing.Size(73, 17);
+			this.chkModeXY.TabIndex = 8;
+			this.chkModeXY.Text = "Mode X,Y";
+			this.chkModeXY.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(754, 556);
+			this.Controls.Add(this.chkModeXY);
 			this.Controls.Add(this.txbNbPt);
 			this.Controls.Add(this.label13);
 			this.Controls.Add(this.bpSave);
@@ -490,6 +502,7 @@
 		private System.Windows.Forms.TextBox txbOffset3;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.TextBox txbNbPt;
+		private System.Windows.Forms.CheckBox chkModeXY;
 	}
 }
 

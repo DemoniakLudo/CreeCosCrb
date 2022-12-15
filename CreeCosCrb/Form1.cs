@@ -66,26 +66,80 @@ namespace CreeSinCrb {
 
 			Pen p = new Pen(Color.FromArgb(255, 255, 255));
 			float inc = 512 / (float)param.nbPt;
-			for (float i = 0; i < 512; i += inc) {
-				double ang = i * Math.PI / 512;
-				float y1 = 0;
-				if (grpCos1.Enabled)
-					y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
-
-				if (grpCos2.Enabled)
-					y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
-
-				if (grpCos3.Enabled)
-					y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
-
-				if (md == ModeData.Draw)
-					g.DrawLine(p, i, y1, i + inc, y1);
-				else {
+			if (chkModeXY.Checked && md == ModeData.Export) {
+				for (float i = 0; i < 512; i += inc) {
+					double ang = i * Math.PI / 512;
+					float x1 = 0, y1 = 0;
+					if (grpCos1.Enabled && grpCos2.Enabled) {
+						x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+					}
+					if (grpCos3.Enabled) {
+						x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+					}
+					line += "#" + ((byte)(x1 / 2)).ToString("X2") + ",";
+					if (++nbOctets >= nbOctetsLigne) {
+						sw.WriteLine(line.Substring(0, line.Length - 1));
+						line = "\tDB\t";
+						nbOctets = 0;
+					}
+				}
+				for (float i = 0; i < 512; i += inc) {
+					double ang = i * Math.PI / 512;
+					float x1 = 0, y1 = 0;
+					if (grpCos1.Enabled && grpCos2.Enabled) {
+						x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+					}
+					if (grpCos3.Enabled) {
+						x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+					}
 					line += "#" + ((byte)(y1 / 2)).ToString("X2") + ",";
 					if (++nbOctets >= nbOctetsLigne) {
 						sw.WriteLine(line.Substring(0, line.Length - 1));
 						line = "\tDB\t";
 						nbOctets = 0;
+					}
+				}
+			}
+			else {
+				for (float i = 0; i < 512; i += inc) {
+					double ang = i * Math.PI / 512;
+					if (chkModeXY.Checked) {
+						float x1 = 0, y1 = 0;
+						if (grpCos1.Enabled && grpCos2.Enabled) {
+							x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
+							y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+						}
+						if (grpCos3.Enabled) {
+							x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+							y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+						}
+						g.DrawLine(p, x1, y1, x1 + inc, y1);
+					}
+					else {
+						float y1 = 0;
+						if (grpCos1.Enabled)
+							y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
+
+						if (grpCos2.Enabled)
+							y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+
+						if (grpCos3.Enabled)
+							y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+
+						if (md == ModeData.Draw)
+							g.DrawLine(p, i, y1, i + inc, y1);
+						else {
+							line += "#" + ((byte)(y1 / 2)).ToString("X2") + ",";
+							if (++nbOctets >= nbOctetsLigne) {
+								sw.WriteLine(line.Substring(0, line.Length - 1));
+								line = "\tDB\t";
+								nbOctets = 0;
+							}
+						}
 					}
 				}
 			}
