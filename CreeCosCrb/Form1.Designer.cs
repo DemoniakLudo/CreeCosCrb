@@ -450,7 +450,7 @@
 			this.Controls.Add(this.bpTest);
 			this.Controls.Add(this.pictureBox1);
 			this.Name = "Form1";
-			this.Text = "CreeCosTab";
+			this.Text = "CreeCosCrb";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.grpCos1.ResumeLayout(false);
 			this.grpCos1.PerformLayout();
