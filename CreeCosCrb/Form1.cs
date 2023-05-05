@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace CreeSinCrb {
+namespace CreeCosCrb {
 	public partial class Form1 : Form {
 		private Graphics g;
 		private ParamCrb param = new ParamCrb();
 		private enum ModeData { Draw, Export };
+		private List<Coord> lstCoord = new List<Coord>();
+		string line = "\tDB\t";
+		int nbOctets = 0, nbOctetsLigne = 16;
 
 		public Form1() {
 			InitializeComponent();
@@ -16,10 +20,8 @@ namespace CreeSinCrb {
 			pictureBox1.Refresh();
 			g = Graphics.FromImage(pictureBox1.Image);
 			Cls();
-			chkEnable1.Checked = true;
-			chkEnable2.Checked = chkEnable3.Checked = false;
-			grpCos1.Enabled = true;
-			grpCos2.Enabled = grpCos3.Enabled = false;
+			chkEnable1.Checked = grpCos1.Enabled = true;
+			chkEnable2.Checked = chkEnable3.Checked = grpCos2.Enabled = grpCos3.Enabled = false;
 		}
 
 		private void Cls() {
@@ -27,46 +29,34 @@ namespace CreeSinCrb {
 			pictureBox1.Refresh();
 		}
 
-		static public void GenereDatas(StreamWriter sw, byte[] tabByte, int length, int nbOctetsLigne, int ligneSepa = 0, string labelSepa = null) {
-			string line = "\tDB\t";
-			int nbOctets = 0, nbLigne = 0, indiceLabel = 0;
-			if (labelSepa != null) {
-				sw.WriteLine(labelSepa + indiceLabel.ToString("00"));
-				indiceLabel++;
+		private void ExportData(byte data, StreamWriter sw) {
+			line += "#" + data.ToString("X2") + ",";
+			if (++nbOctets >= nbOctetsLigne) {
+				sw.WriteLine(line.Substring(0, line.Length - 1));
+				line = "\tDB\t";
+				nbOctets = 0;
 			}
-			for (int i = 0; i < length; i++) {
-				line += "#" + tabByte[i].ToString("X2") + ",";
-				if (++nbOctets >= nbOctetsLigne) {
-					sw.WriteLine(line.Substring(0, line.Length - 1));
-					line = "\tDB\t";
-					nbOctets = 0;
-					if (i < length - 1 && ++nbLigne >= ligneSepa && ligneSepa > 0) {
-						nbLigne = 0;
-						if (labelSepa != null) {
-							sw.WriteLine(labelSepa + indiceLabel.ToString("00"));
-							indiceLabel++;
-						}
-						else
-							line += "\r\n";
-					}
-				}
-			}
-			if (nbOctets > 0)
+		}
+
+		private StreamWriter InitExport(string fileName) {
+			line = "\tDB\t";
+			nbOctets = 0;
+			nbOctetsLigne = 16;
+			return File.CreateText(fileName);
+		}
+
+		private void EndExport(StreamWriter sw) {
+			if (line.Length>4)
 				sw.WriteLine(line.Substring(0, line.Length - 1));
 
-			sw.WriteLine("; Taille totale " + length.ToString() + " octets");
+			sw.Close();
 		}
 
 		private void TestCrb(ModeData md, string fileName = null) {
-			string line = "\tDB\t";
-			int nbOctets = 0, nbOctetsLigne = 16;
-			StreamWriter sw = null;
-			if (md == ModeData.Export)
-				sw = File.CreateText(fileName);
-
+			lstCoord.Clear();
 			Pen p = new Pen(Color.FromArgb(255, 255, 255));
 			float inc = 512 / (float)param.nbPt;
-			if (chkModeXY.Checked && md == ModeData.Export) {
+			if (chkModeXY.Checked) {
 				for (float i = 0; i < 512; i += inc) {
 					double ang = i * Math.PI / 512;
 					float x1 = 0, y1 = 0;
@@ -78,75 +68,51 @@ namespace CreeSinCrb {
 						x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
 						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
 					}
-					line += "#" + ((byte)(x1 / 2)).ToString("X2") + ",";
-					if (++nbOctets >= nbOctetsLigne) {
-						sw.WriteLine(line.Substring(0, line.Length - 1));
-						line = "\tDB\t";
-						nbOctets = 0;
-					}
-				}
-				for (float i = 0; i < 512; i += inc) {
-					double ang = i * Math.PI / 512;
-					float x1 = 0, y1 = 0;
-					if (grpCos1.Enabled && grpCos2.Enabled) {
-						x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
-						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
-					}
-					if (grpCos3.Enabled) {
-						x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
-						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
-					}
-					line += "#" + ((byte)(y1 / 2)).ToString("X2") + ",";
-					if (++nbOctets >= nbOctetsLigne) {
-						sw.WriteLine(line.Substring(0, line.Length - 1));
-						line = "\tDB\t";
-						nbOctets = 0;
-					}
+					lstCoord.Add(new Coord((int)x1, (int)y1));
+					if (md == ModeData.Draw)
+						g.DrawLine(p, x1, y1, x1 + inc, y1);
 				}
 			}
 			else {
 				for (float i = 0; i < 512; i += inc) {
 					double ang = i * Math.PI / 512;
-					if (chkModeXY.Checked) {
-						float x1 = 0, y1 = 0;
-						if (grpCos1.Enabled && grpCos2.Enabled) {
-							x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
-							y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
-						}
-						if (grpCos3.Enabled) {
-							x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
-							y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
-						}
-						g.DrawLine(p, x1, y1, x1 + inc, y1);
-					}
-					else {
-						float y1 = 0;
-						if (grpCos1.Enabled)
-							y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
+					float y1 = 0;
+					if (grpCos1.Enabled)
+						y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
 
-						if (grpCos2.Enabled)
-							y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+					if (grpCos2.Enabled)
+						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
 
-						if (grpCos3.Enabled)
-							y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+					if (grpCos3.Enabled)
+						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
 
-						if (md == ModeData.Draw)
-							g.DrawLine(p, i, y1, i + inc, y1);
-						else {
-							line += "#" + ((byte)(y1 / 2)).ToString("X2") + ",";
-							if (++nbOctets >= nbOctetsLigne) {
-								sw.WriteLine(line.Substring(0, line.Length - 1));
-								line = "\tDB\t";
-								nbOctets = 0;
-							}
-						}
-					}
+					lstCoord.Add(new Coord((int)i, (int)y1));
+					if (md == ModeData.Draw)
+						g.DrawLine(p, i, y1, i + inc, y1);
 				}
 			}
 			if (md == ModeData.Draw)
 				pictureBox1.Refresh();
-			else
-				sw.Close();
+			else {
+				StreamWriter sw = InitExport(fileName);
+				if (chkModeXY.Checked) {
+					foreach (Coord c in lstCoord) {
+						ExportData((byte)c.x, sw);
+					}
+					foreach (Coord c in lstCoord) {
+						ExportData((byte)c.y, sw);
+					}
+				}
+				else {
+					foreach (Coord c in lstCoord) {
+						if (!chkOnlyY.Checked)
+							ExportData((byte)c.x, sw);
+
+						ExportData((byte)c.y, sw);
+					}
+				}
+				EndExport(sw);
+			}
 		}
 
 		private bool CheckValues(string strPer, string strAmpl, string strDephas, string strOffset, ref double per, ref double ampl, ref double dephas, ref double offset) {
@@ -277,6 +243,15 @@ namespace CreeSinCrb {
 				if (result == DialogResult.OK)
 					TestCrb(ModeData.Export, dlg.FileName);
 			}
+		}
+	}
+
+	public class Coord {
+		public int x,y;
+
+		public Coord(int x, int y) {
+			this.x=x;
+			this.y=y;
 		}
 	}
 }

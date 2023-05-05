@@ -1,4 +1,4 @@
-﻿namespace CreeSinCrb {
+﻿namespace CreeCosCrb {
 	partial class Form1 {
 		/// <summary>
 		/// Variable nécessaire au concepteur.
@@ -61,6 +61,7 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.txbNbPt = new System.Windows.Forms.TextBox();
 			this.chkModeXY = new System.Windows.Forms.CheckBox();
+			this.chkOnlyY = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.grpCos1.SuspendLayout();
 			this.grpCos2.SuspendLayout();
@@ -430,11 +431,22 @@
 			this.chkModeXY.Text = "Mode X,Y";
 			this.chkModeXY.UseVisualStyleBackColor = true;
 			// 
+			// chkOnlyY
+			// 
+			this.chkOnlyY.AutoSize = true;
+			this.chkOnlyY.Location = new System.Drawing.Point(616, 69);
+			this.chkOnlyY.Name = "chkOnlyY";
+			this.chkOnlyY.Size = new System.Drawing.Size(86, 17);
+			this.chkOnlyY.TabIndex = 9;
+			this.chkOnlyY.Text = "Seulement Y";
+			this.chkOnlyY.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(754, 556);
+			this.Controls.Add(this.chkOnlyY);
 			this.Controls.Add(this.chkModeXY);
 			this.Controls.Add(this.txbNbPt);
 			this.Controls.Add(this.label13);
@@ -503,6 +515,7 @@
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.TextBox txbNbPt;
 		private System.Windows.Forms.CheckBox chkModeXY;
+		private System.Windows.Forms.CheckBox chkOnlyY;
 	}
 }
 

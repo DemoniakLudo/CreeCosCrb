@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CreeSinCrb {
+namespace CreeCosCrb {
 	static class Program {
 		/// <summary>
 		/// Point d'entrée principal de l'application.

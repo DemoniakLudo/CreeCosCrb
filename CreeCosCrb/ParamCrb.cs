@@ -1,4 +1,4 @@
-﻿namespace CreeSinCrb {
+﻿namespace CreeCosCrb {
 	[System.Serializable]
 	public class ParamCrb {
 		public int nbPt = 256;
