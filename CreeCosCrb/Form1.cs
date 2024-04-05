@@ -11,7 +11,7 @@ namespace CreeCosCrb {
 		private ParamCrb param = new ParamCrb();
 		private enum ModeData { Draw, Export };
 		private List<Coord> lstCoord = new List<Coord>();
-		string line = "\tDB\t";
+		string line;
 		int nbOctets = 0, nbOctetsLigne = 16;
 
 		public Form1() {
@@ -29,24 +29,25 @@ namespace CreeCosCrb {
 			pictureBox1.Refresh();
 		}
 
-		private void ExportData(byte data, StreamWriter sw) {
-			line += "#" + data.ToString("X2") + ",";
+		private void ExportData(int data, StreamWriter sw) {
+			string val = data.ToString(chk16bits.Checked ? "X4" : "X2");
+			line += "#" + val.Substring(data < 0 ? chk16bits.Checked ? 4 : 6 : 0) + ",";
 			if (++nbOctets >= nbOctetsLigne) {
 				sw.WriteLine(line.Substring(0, line.Length - 1));
-				line = "\tDB\t";
+				line = chk16bits.Checked ? "\tDW\t" : "\tDB\t";
 				nbOctets = 0;
 			}
 		}
 
 		private StreamWriter InitExport(string fileName) {
-			line = "\tDB\t";
+			line = chk16bits.Checked ? "\tDW\t" : "\tDB\t";
 			nbOctets = 0;
 			nbOctetsLigne = 16;
 			return File.CreateText(fileName);
 		}
 
 		private void EndExport(StreamWriter sw) {
-			if (line.Length>4)
+			if (line.Length > 4)
 				sw.WriteLine(line.Substring(0, line.Length - 1));
 
 			sw.Close();
@@ -97,18 +98,20 @@ namespace CreeCosCrb {
 				StreamWriter sw = InitExport(fileName);
 				if (chkModeXY.Checked) {
 					foreach (Coord c in lstCoord) {
-						ExportData((byte)c.x, sw);
+						ExportData(c.x, sw);
 					}
 					foreach (Coord c in lstCoord) {
-						ExportData((byte)c.y, sw);
+						ExportData(c.y, sw);
 					}
 				}
 				else {
 					foreach (Coord c in lstCoord) {
-						if (!chkOnlyY.Checked)
-							ExportData((byte)c.x, sw);
-
-						ExportData((byte)c.y, sw);
+						if (!chkOnlyY.Checked) {
+							ExportData(c.x, sw);
+							ExportData(c.y, sw);
+						}
+						else
+							ExportData(c.y, sw);
 					}
 				}
 				EndExport(sw);
@@ -175,8 +178,7 @@ namespace CreeCosCrb {
 
 		private void bpRead_Click(object sender, EventArgs e) {
 			Enabled = false;
-			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Filter = "Données CreeCosCrb (*.xml)|*.xml";
+			OpenFileDialog dlg = new OpenFileDialog { Filter = "Données CreeCosCrb (*.xml)|*.xml" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
@@ -209,8 +211,7 @@ namespace CreeCosCrb {
 
 		private void bpSave_Click(object sender, EventArgs e) {
 			Enabled = false;
-			SaveFileDialog dlg = new SaveFileDialog();
-			dlg.Filter = "Données CreeCosCrb (*.xml)|*.xml";
+			SaveFileDialog dlg = new SaveFileDialog { Filter = "Données CreeCosCrb (*.xml)|*.xml" };
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
@@ -236,8 +237,7 @@ namespace CreeCosCrb {
 		private void bpExport_Click(object sender, EventArgs e) {
 			if (TestValues()) {
 				Enabled = false;
-				SaveFileDialog dlg = new SaveFileDialog();
-				dlg.Filter = "Fichier assembleur (*.asm)|*.asm";
+				SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichier assembleur (*.asm)|*.asm" };
 				DialogResult result = dlg.ShowDialog();
 				Enabled = true;
 				if (result == DialogResult.OK)
@@ -247,11 +247,11 @@ namespace CreeCosCrb {
 	}
 
 	public class Coord {
-		public int x,y;
+		public int x, y;
 
 		public Coord(int x, int y) {
-			this.x=x;
-			this.y=y;
+			this.x = x;
+			this.y = y;
 		}
 	}
 }

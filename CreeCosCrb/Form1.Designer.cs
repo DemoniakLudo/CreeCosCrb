@@ -62,6 +62,7 @@
 			this.txbNbPt = new System.Windows.Forms.TextBox();
 			this.chkModeXY = new System.Windows.Forms.CheckBox();
 			this.chkOnlyY = new System.Windows.Forms.CheckBox();
+			this.chk16bits = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.grpCos1.SuspendLayout();
 			this.grpCos2.SuspendLayout();
@@ -441,11 +442,22 @@
 			this.chkOnlyY.Text = "Seulement Y";
 			this.chkOnlyY.UseVisualStyleBackColor = true;
 			// 
+			// chk16bits
+			// 
+			this.chk16bits.AutoSize = true;
+			this.chk16bits.Location = new System.Drawing.Point(530, 92);
+			this.chk16bits.Name = "chk16bits";
+			this.chk16bits.Size = new System.Drawing.Size(148, 17);
+			this.chk16bits.TabIndex = 10;
+			this.chk16bits.Text = "Données sur 16 bits (DW)";
+			this.chk16bits.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(754, 556);
+			this.Controls.Add(this.chk16bits);
 			this.Controls.Add(this.chkOnlyY);
 			this.Controls.Add(this.chkModeXY);
 			this.Controls.Add(this.txbNbPt);
@@ -516,6 +528,7 @@
 		private System.Windows.Forms.TextBox txbNbPt;
 		private System.Windows.Forms.CheckBox chkModeXY;
 		private System.Windows.Forms.CheckBox chkOnlyY;
+		private System.Windows.Forms.CheckBox chk16bits;
 	}
 }
 
