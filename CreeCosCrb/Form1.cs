@@ -11,7 +11,7 @@ namespace CreeCosCrb {
 		private ParamCrb param = new ParamCrb();
 		private enum ModeData { Draw, Export };
 		private List<Coord> lstCoord = new List<Coord>();
-		string line;
+		string line = "\tDB\t";
 		int nbOctets = 0, nbOctetsLigne = 16;
 
 		public Form1() {
@@ -29,18 +29,17 @@ namespace CreeCosCrb {
 			pictureBox1.Refresh();
 		}
 
-		private void ExportData(int data, StreamWriter sw) {
-			string val = data.ToString(chk16bits.Checked ? "X4" : "X2");
-			line += "#" + val.Substring(data < 0 ? chk16bits.Checked ? 4 : 6 : 0) + ",";
+		private void ExportData(byte data, StreamWriter sw) {
+			line += "#" + data.ToString("X2") + ",";
 			if (++nbOctets >= nbOctetsLigne) {
 				sw.WriteLine(line.Substring(0, line.Length - 1));
-				line = chk16bits.Checked ? "\tDW\t" : "\tDB\t";
+				line = "\tDB\t";
 				nbOctets = 0;
 			}
 		}
 
 		private StreamWriter InitExport(string fileName) {
-			line = chk16bits.Checked ? "\tDW\t" : "\tDB\t";
+			line = "\tDB\t";
 			nbOctets = 0;
 			nbOctetsLigne = 16;
 			return File.CreateText(fileName);
@@ -61,13 +60,17 @@ namespace CreeCosCrb {
 				for (float i = 0; i < 512; i += inc) {
 					double ang = i * Math.PI / 512;
 					float x1 = 0, y1 = 0;
+					double c1 = Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0));
 					if (grpCos1.Enabled && grpCos2.Enabled) {
-						x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
-						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+						double s2 = Math.Sin((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0));
+						x1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * (chkAbs1.Checked ? Math.Abs(c1) : c1));
+						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * (chkAbs2.Checked ? Math.Abs(s2) : s2));
 					}
 					if (grpCos3.Enabled) {
-						x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
-						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+						double c3 = Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0));
+						double s3 = Math.Sin((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0));
+						x1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * (chkAbs3.Checked ? Math.Abs(c3) : c3));
+						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * (chkAbs3.Checked ? Math.Abs(s3) : s3));
 					}
 					lstCoord.Add(new Coord((int)x1, (int)y1));
 					if (md == ModeData.Draw)
@@ -78,14 +81,17 @@ namespace CreeCosCrb {
 				for (float i = 0; i < 512; i += inc) {
 					double ang = i * Math.PI / 512;
 					float y1 = 0;
+					double c1 = Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0));
+					double c2 = Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0));
+					double c3 = Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0));
 					if (grpCos1.Enabled)
-						y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * Math.Cos((ang * param.periode1) + (param.dephasage1 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset1 + 2 * param.amplitude1 * (chkAbs1.Checked ? Math.Abs(c1) : c1));
 
 					if (grpCos2.Enabled)
-						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * Math.Cos((ang * param.periode2) + (param.dephasage2 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset2 + 2 * param.amplitude2 * (chkAbs2.Checked ? Math.Abs(c2) : c2));
 
 					if (grpCos3.Enabled)
-						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * Math.Cos((ang * param.periode3) + (param.dephasage3 * Math.PI / 180.0)));
+						y1 += (float)(2 * param.offset3 + 2 * param.amplitude3 * (chkAbs3.Checked ? Math.Abs(c3) : c3));
 
 					lstCoord.Add(new Coord((int)i, (int)y1));
 					if (md == ModeData.Draw)
@@ -98,20 +104,18 @@ namespace CreeCosCrb {
 				StreamWriter sw = InitExport(fileName);
 				if (chkModeXY.Checked) {
 					foreach (Coord c in lstCoord) {
-						ExportData(c.x, sw);
+						ExportData((byte)c.x, sw);
 					}
 					foreach (Coord c in lstCoord) {
-						ExportData(c.y, sw);
+						ExportData((byte)c.y, sw);
 					}
 				}
 				else {
 					foreach (Coord c in lstCoord) {
-						if (!chkOnlyY.Checked) {
-							ExportData(c.x, sw);
-							ExportData(c.y, sw);
-						}
-						else
-							ExportData(c.y, sw);
+						if (!chkOnlyY.Checked)
+							ExportData((byte)c.x, sw);
+
+						ExportData((byte)c.y, sw);
 					}
 				}
 				EndExport(sw);
@@ -122,7 +126,7 @@ namespace CreeCosCrb {
 			double locPer = 0, locAmpl = 0, locDephas = 0, locOffset;
 			if (double.TryParse(strPer.Replace('.', ','), out locPer) && locPer > 0 && locPer < 30) {
 				per = locPer;
-				if (double.TryParse(strAmpl.Replace('.', ','), out locAmpl) && locAmpl > 0 && locAmpl < 256) {
+				if (double.TryParse(strAmpl.Replace('.', ','), out locAmpl) && locAmpl > -128 && locAmpl < 256) {
 					ampl = locAmpl;
 					if (double.TryParse(strDephas.Replace('.', ','), out locDephas)) {
 						dephas = locDephas;
@@ -178,23 +182,28 @@ namespace CreeCosCrb {
 
 		private void bpRead_Click(object sender, EventArgs e) {
 			Enabled = false;
-			OpenFileDialog dlg = new OpenFileDialog { Filter = "Données CreeCosCrb (*.xml)|*.xml" };
+			OpenFileDialog dlg = new OpenFileDialog();
+			dlg.Filter = "Données CreeCosCrb (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream fileParam = File.Open(dlg.FileName, FileMode.Open);
 				try {
 					param = (ParamCrb)new XmlSerializer(typeof(ParamCrb)).Deserialize(fileParam);
+					chkModeXY.Checked = param.modeXY;
 					chkEnable1.Checked = param.cos1Actif;
+					chkAbs1.Checked = param.abs1;
 					txbAmplitude1.Text = param.amplitude1.ToString();
 					txbDephasage1.Text = param.dephasage1.ToString();
 					txbPeriode1.Text = param.periode1.ToString();
 					txbOffset1.Text = param.offset1.ToString();
 					chkEnable2.Checked = param.cos2Actif;
+					chkAbs2.Checked = param.abs2;
 					txbAmplitude2.Text = param.amplitude2.ToString();
 					txbDephasage2.Text = param.dephasage2.ToString();
 					txbPeriode2.Text = param.periode2.ToString();
 					txbOffset2.Text = param.offset2.ToString();
 					chkEnable3.Checked = param.cos3Actif;
+					chkAbs3.Checked = param.abs3;
 					txbAmplitude3.Text = param.amplitude3.ToString();
 					txbDephasage3.Text = param.dephasage3.ToString();
 					txbPeriode3.Text = param.periode3.ToString();
@@ -211,12 +220,16 @@ namespace CreeCosCrb {
 
 		private void bpSave_Click(object sender, EventArgs e) {
 			Enabled = false;
-			SaveFileDialog dlg = new SaveFileDialog { Filter = "Données CreeCosCrb (*.xml)|*.xml" };
+			SaveFileDialog dlg = new SaveFileDialog();
+			dlg.Filter = "Données CreeCosCrb (*.xml)|*.xml";
 			DialogResult result = dlg.ShowDialog();
 			if (result == DialogResult.OK) {
 				FileStream file = File.Open(dlg.FileName, FileMode.Create);
 				try {
-
+					param.modeXY = chkModeXY.Checked;
+					param.abs1 = chkAbs1.Checked;
+					param.abs2 = chkAbs2.Checked;
+					param.abs3 = chkAbs3.Checked;
 					new XmlSerializer(typeof(ParamCrb)).Serialize(file, param);
 				}
 				catch {
@@ -237,7 +250,8 @@ namespace CreeCosCrb {
 		private void bpExport_Click(object sender, EventArgs e) {
 			if (TestValues()) {
 				Enabled = false;
-				SaveFileDialog dlg = new SaveFileDialog { Filter = "Fichier assembleur (*.asm)|*.asm" };
+				SaveFileDialog dlg = new SaveFileDialog();
+				dlg.Filter = "Fichier assembleur (*.asm)|*.asm";
 				DialogResult result = dlg.ShowDialog();
 				Enabled = true;
 				if (result == DialogResult.OK)

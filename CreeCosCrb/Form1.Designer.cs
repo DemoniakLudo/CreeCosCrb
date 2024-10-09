@@ -26,6 +26,7 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.bpTest = new System.Windows.Forms.Button();
 			this.grpCos1 = new System.Windows.Forms.GroupBox();
+			this.chkAbs1 = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -36,6 +37,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.chkEnable1 = new System.Windows.Forms.CheckBox();
 			this.grpCos2 = new System.Windows.Forms.GroupBox();
+			this.chkAbs2 = new System.Windows.Forms.CheckBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -46,6 +48,7 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.chkEnable2 = new System.Windows.Forms.CheckBox();
 			this.grpCos3 = new System.Windows.Forms.GroupBox();
+			this.chkAbs3 = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -62,7 +65,6 @@
 			this.txbNbPt = new System.Windows.Forms.TextBox();
 			this.chkModeXY = new System.Windows.Forms.CheckBox();
 			this.chkOnlyY = new System.Windows.Forms.CheckBox();
-			this.chk16bits = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.grpCos1.SuspendLayout();
 			this.grpCos2.SuspendLayout();
@@ -71,7 +73,7 @@
 			// 
 			// pictureBox1
 			// 
-			this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+			this.pictureBox1.Location = new System.Drawing.Point(12, 41);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(512, 512);
 			this.pictureBox1.TabIndex = 0;
@@ -79,7 +81,7 @@
 			// 
 			// bpTest
 			// 
-			this.bpTest.Location = new System.Drawing.Point(530, 40);
+			this.bpTest.Location = new System.Drawing.Point(530, 31);
 			this.bpTest.Name = "bpTest";
 			this.bpTest.Size = new System.Drawing.Size(75, 23);
 			this.bpTest.TabIndex = 1;
@@ -89,6 +91,7 @@
 			// 
 			// grpCos1
 			// 
+			this.grpCos1.Controls.Add(this.chkAbs1);
 			this.grpCos1.Controls.Add(this.label10);
 			this.grpCos1.Controls.Add(this.label7);
 			this.grpCos1.Controls.Add(this.label2);
@@ -97,12 +100,22 @@
 			this.grpCos1.Controls.Add(this.txbAmplitude1);
 			this.grpCos1.Controls.Add(this.txbPeriode1);
 			this.grpCos1.Controls.Add(this.label1);
-			this.grpCos1.Location = new System.Drawing.Point(530, 144);
+			this.grpCos1.Location = new System.Drawing.Point(530, 128);
 			this.grpCos1.Name = "grpCos1";
-			this.grpCos1.Size = new System.Drawing.Size(160, 130);
+			this.grpCos1.Size = new System.Drawing.Size(221, 130);
 			this.grpCos1.TabIndex = 4;
 			this.grpCos1.TabStop = false;
 			this.grpCos1.Text = "Cosinus 1";
+			// 
+			// chkAbs1
+			// 
+			this.chkAbs1.AutoSize = true;
+			this.chkAbs1.Location = new System.Drawing.Point(165, 49);
+			this.chkAbs1.Name = "chkAbs1";
+			this.chkAbs1.Size = new System.Drawing.Size(44, 17);
+			this.chkAbs1.TabIndex = 5;
+			this.chkAbs1.Text = "Abs";
+			this.chkAbs1.UseVisualStyleBackColor = true;
 			// 
 			// label10
 			// 
@@ -175,7 +188,7 @@
 			// chkEnable1
 			// 
 			this.chkEnable1.AutoSize = true;
-			this.chkEnable1.Location = new System.Drawing.Point(695, 177);
+			this.chkEnable1.Location = new System.Drawing.Point(530, 109);
 			this.chkEnable1.Name = "chkEnable1";
 			this.chkEnable1.Size = new System.Drawing.Size(56, 17);
 			this.chkEnable1.TabIndex = 0;
@@ -185,6 +198,7 @@
 			// 
 			// grpCos2
 			// 
+			this.grpCos2.Controls.Add(this.chkAbs2);
 			this.grpCos2.Controls.Add(this.label11);
 			this.grpCos2.Controls.Add(this.label8);
 			this.grpCos2.Controls.Add(this.label3);
@@ -193,12 +207,22 @@
 			this.grpCos2.Controls.Add(this.txbAmplitude2);
 			this.grpCos2.Controls.Add(this.txbPeriode2);
 			this.grpCos2.Controls.Add(this.label4);
-			this.grpCos2.Location = new System.Drawing.Point(530, 282);
+			this.grpCos2.Location = new System.Drawing.Point(530, 288);
 			this.grpCos2.Name = "grpCos2";
-			this.grpCos2.Size = new System.Drawing.Size(160, 130);
+			this.grpCos2.Size = new System.Drawing.Size(221, 130);
 			this.grpCos2.TabIndex = 4;
 			this.grpCos2.TabStop = false;
-			this.grpCos2.Text = "Cosinus 1";
+			this.grpCos2.Text = "Cosinus 2";
+			// 
+			// chkAbs2
+			// 
+			this.chkAbs2.AutoSize = true;
+			this.chkAbs2.Location = new System.Drawing.Point(165, 49);
+			this.chkAbs2.Name = "chkAbs2";
+			this.chkAbs2.Size = new System.Drawing.Size(44, 17);
+			this.chkAbs2.TabIndex = 5;
+			this.chkAbs2.Text = "Abs";
+			this.chkAbs2.UseVisualStyleBackColor = true;
 			// 
 			// label11
 			// 
@@ -271,7 +295,7 @@
 			// chkEnable2
 			// 
 			this.chkEnable2.AutoSize = true;
-			this.chkEnable2.Location = new System.Drawing.Point(695, 315);
+			this.chkEnable2.Location = new System.Drawing.Point(530, 269);
 			this.chkEnable2.Name = "chkEnable2";
 			this.chkEnable2.Size = new System.Drawing.Size(56, 17);
 			this.chkEnable2.TabIndex = 0;
@@ -281,6 +305,7 @@
 			// 
 			// grpCos3
 			// 
+			this.grpCos3.Controls.Add(this.chkAbs3);
 			this.grpCos3.Controls.Add(this.label12);
 			this.grpCos3.Controls.Add(this.label9);
 			this.grpCos3.Controls.Add(this.label5);
@@ -289,12 +314,22 @@
 			this.grpCos3.Controls.Add(this.txbAmplitude3);
 			this.grpCos3.Controls.Add(this.txbPeriode3);
 			this.grpCos3.Controls.Add(this.label6);
-			this.grpCos3.Location = new System.Drawing.Point(530, 420);
+			this.grpCos3.Location = new System.Drawing.Point(530, 447);
 			this.grpCos3.Name = "grpCos3";
-			this.grpCos3.Size = new System.Drawing.Size(160, 130);
+			this.grpCos3.Size = new System.Drawing.Size(221, 130);
 			this.grpCos3.TabIndex = 4;
 			this.grpCos3.TabStop = false;
-			this.grpCos3.Text = "Cosinus 1";
+			this.grpCos3.Text = "Cosinus 3";
+			// 
+			// chkAbs3
+			// 
+			this.chkAbs3.AutoSize = true;
+			this.chkAbs3.Location = new System.Drawing.Point(165, 50);
+			this.chkAbs3.Name = "chkAbs3";
+			this.chkAbs3.Size = new System.Drawing.Size(44, 17);
+			this.chkAbs3.TabIndex = 5;
+			this.chkAbs3.Text = "Abs";
+			this.chkAbs3.UseVisualStyleBackColor = true;
 			// 
 			// label12
 			// 
@@ -367,7 +402,7 @@
 			// chkEnable3
 			// 
 			this.chkEnable3.AutoSize = true;
-			this.chkEnable3.Location = new System.Drawing.Point(695, 457);
+			this.chkEnable3.Location = new System.Drawing.Point(530, 429);
 			this.chkEnable3.Name = "chkEnable3";
 			this.chkEnable3.Size = new System.Drawing.Size(56, 17);
 			this.chkEnable3.TabIndex = 0;
@@ -377,7 +412,7 @@
 			// 
 			// bpExport
 			// 
-			this.bpExport.Location = new System.Drawing.Point(616, 40);
+			this.bpExport.Location = new System.Drawing.Point(616, 31);
 			this.bpExport.Name = "bpExport";
 			this.bpExport.Size = new System.Drawing.Size(75, 23);
 			this.bpExport.TabIndex = 1;
@@ -387,7 +422,7 @@
 			// 
 			// bpRead
 			// 
-			this.bpRead.Location = new System.Drawing.Point(530, 12);
+			this.bpRead.Location = new System.Drawing.Point(530, 5);
 			this.bpRead.Name = "bpRead";
 			this.bpRead.Size = new System.Drawing.Size(75, 23);
 			this.bpRead.TabIndex = 5;
@@ -397,7 +432,7 @@
 			// 
 			// bpSave
 			// 
-			this.bpSave.Location = new System.Drawing.Point(616, 12);
+			this.bpSave.Location = new System.Drawing.Point(616, 5);
 			this.bpSave.Name = "bpSave";
 			this.bpSave.Size = new System.Drawing.Size(75, 23);
 			this.bpSave.TabIndex = 5;
@@ -408,7 +443,7 @@
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(539, 116);
+			this.label13.Location = new System.Drawing.Point(539, 84);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(110, 13);
 			this.label13.TabIndex = 6;
@@ -416,7 +451,7 @@
 			// 
 			// txbNbPt
 			// 
-			this.txbNbPt.Location = new System.Drawing.Point(655, 113);
+			this.txbNbPt.Location = new System.Drawing.Point(655, 81);
 			this.txbNbPt.Name = "txbNbPt";
 			this.txbNbPt.Size = new System.Drawing.Size(67, 20);
 			this.txbNbPt.TabIndex = 7;
@@ -425,7 +460,7 @@
 			// chkModeXY
 			// 
 			this.chkModeXY.AutoSize = true;
-			this.chkModeXY.Location = new System.Drawing.Point(530, 69);
+			this.chkModeXY.Location = new System.Drawing.Point(530, 60);
 			this.chkModeXY.Name = "chkModeXY";
 			this.chkModeXY.Size = new System.Drawing.Size(73, 17);
 			this.chkModeXY.TabIndex = 8;
@@ -435,29 +470,18 @@
 			// chkOnlyY
 			// 
 			this.chkOnlyY.AutoSize = true;
-			this.chkOnlyY.Location = new System.Drawing.Point(616, 69);
+			this.chkOnlyY.Location = new System.Drawing.Point(616, 60);
 			this.chkOnlyY.Name = "chkOnlyY";
 			this.chkOnlyY.Size = new System.Drawing.Size(86, 17);
 			this.chkOnlyY.TabIndex = 9;
 			this.chkOnlyY.Text = "Seulement Y";
 			this.chkOnlyY.UseVisualStyleBackColor = true;
 			// 
-			// chk16bits
-			// 
-			this.chk16bits.AutoSize = true;
-			this.chk16bits.Location = new System.Drawing.Point(530, 92);
-			this.chk16bits.Name = "chk16bits";
-			this.chk16bits.Size = new System.Drawing.Size(148, 17);
-			this.chk16bits.TabIndex = 10;
-			this.chk16bits.Text = "Données sur 16 bits (DW)";
-			this.chk16bits.UseVisualStyleBackColor = true;
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(754, 556);
-			this.Controls.Add(this.chk16bits);
+			this.ClientSize = new System.Drawing.Size(754, 575);
 			this.Controls.Add(this.chkOnlyY);
 			this.Controls.Add(this.chkModeXY);
 			this.Controls.Add(this.txbNbPt);
@@ -467,12 +491,12 @@
 			this.Controls.Add(this.grpCos3);
 			this.Controls.Add(this.grpCos2);
 			this.Controls.Add(this.grpCos1);
-			this.Controls.Add(this.chkEnable3);
-			this.Controls.Add(this.chkEnable2);
-			this.Controls.Add(this.chkEnable1);
 			this.Controls.Add(this.bpExport);
 			this.Controls.Add(this.bpTest);
 			this.Controls.Add(this.pictureBox1);
+			this.Controls.Add(this.chkEnable1);
+			this.Controls.Add(this.chkEnable2);
+			this.Controls.Add(this.chkEnable3);
 			this.Name = "Form1";
 			this.Text = "CreeCosCrb";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -528,7 +552,9 @@
 		private System.Windows.Forms.TextBox txbNbPt;
 		private System.Windows.Forms.CheckBox chkModeXY;
 		private System.Windows.Forms.CheckBox chkOnlyY;
-		private System.Windows.Forms.CheckBox chk16bits;
+		private System.Windows.Forms.CheckBox chkAbs1;
+		private System.Windows.Forms.CheckBox chkAbs2;
+		private System.Windows.Forms.CheckBox chkAbs3;
 	}
 }
 
