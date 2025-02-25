@@ -87,7 +87,7 @@
 			this.bpTest.TabIndex = 1;
 			this.bpTest.Text = "Test";
 			this.bpTest.UseVisualStyleBackColor = true;
-			this.bpTest.Click += new System.EventHandler(this.bpTest_Click);
+			this.bpTest.Click += new System.EventHandler(this.BpTest_Click);
 			// 
 			// grpCos1
 			// 
@@ -194,7 +194,7 @@
 			this.chkEnable1.TabIndex = 0;
 			this.chkEnable1.Text = "Activé";
 			this.chkEnable1.UseVisualStyleBackColor = true;
-			this.chkEnable1.CheckedChanged += new System.EventHandler(this.chkEnable1_CheckedChanged);
+			this.chkEnable1.CheckedChanged += new System.EventHandler(this.ChkEnable1_CheckedChanged);
 			// 
 			// grpCos2
 			// 
@@ -301,7 +301,7 @@
 			this.chkEnable2.TabIndex = 0;
 			this.chkEnable2.Text = "Activé";
 			this.chkEnable2.UseVisualStyleBackColor = true;
-			this.chkEnable2.CheckedChanged += new System.EventHandler(this.chkEnable2_CheckedChanged);
+			this.chkEnable2.CheckedChanged += new System.EventHandler(this.ChkEnable2_CheckedChanged);
 			// 
 			// grpCos3
 			// 
@@ -408,7 +408,7 @@
 			this.chkEnable3.TabIndex = 0;
 			this.chkEnable3.Text = "Activé";
 			this.chkEnable3.UseVisualStyleBackColor = true;
-			this.chkEnable3.CheckedChanged += new System.EventHandler(this.chkEnable3_CheckedChanged);
+			this.chkEnable3.CheckedChanged += new System.EventHandler(this.ChkEnable3_CheckedChanged);
 			// 
 			// bpExport
 			// 
@@ -418,7 +418,7 @@
 			this.bpExport.TabIndex = 1;
 			this.bpExport.Text = "Export asm";
 			this.bpExport.UseVisualStyleBackColor = true;
-			this.bpExport.Click += new System.EventHandler(this.bpExport_Click);
+			this.bpExport.Click += new System.EventHandler(this.BpExport_Click);
 			// 
 			// bpRead
 			// 
@@ -428,7 +428,7 @@
 			this.bpRead.TabIndex = 5;
 			this.bpRead.Text = "Lecture";
 			this.bpRead.UseVisualStyleBackColor = true;
-			this.bpRead.Click += new System.EventHandler(this.bpRead_Click);
+			this.bpRead.Click += new System.EventHandler(this.BpRead_Click);
 			// 
 			// bpSave
 			// 
@@ -438,7 +438,7 @@
 			this.bpSave.TabIndex = 5;
 			this.bpSave.Text = "Sauvegarde";
 			this.bpSave.UseVisualStyleBackColor = true;
-			this.bpSave.Click += new System.EventHandler(this.bpSave_Click);
+			this.bpSave.Click += new System.EventHandler(this.BpSave_Click);
 			// 
 			// label13
 			// 
